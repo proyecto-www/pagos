@@ -1,0 +1,26 @@
+
+service: pagos
+app: pagos
+org: dve98
+plugins: 
+  - serverless-offline
+  - serverless-dotenv-plugin
+  - serverless-plugin-typescript
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  stage: ${opt:stage, 'dev'}
+
+
+
+
+functions:
+  handler:
+    handler: src/application/index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get 
