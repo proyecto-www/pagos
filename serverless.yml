@@ -21,7 +21,7 @@ functions:
     handler: src/application/index.handler
     events:
       - httpApi:
-          path: /
+          path: precio/{placa}
           method: get 
       - httpApi:
           path: /
