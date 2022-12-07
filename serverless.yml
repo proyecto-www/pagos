@@ -12,6 +12,14 @@ provider:
   name: aws
   runtime: nodejs16.x
   stage: ${opt:stage, 'dev'}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+      - dynamodb:Query    
+      - dynamodb:BatchGetItem
+      - dynamodb:GeItem
+      - dynamodb:PutItem
+      Resource: 'arn:aws:dynamodb:us-east-1:666676864377:table/Tarifas'
 
 
 
@@ -21,7 +29,7 @@ functions:
     handler: src/application/index.handler
     events:
       - httpApi:
-          path: /
+          path: /precio/{placa}
           method: get 
       - httpApi:
           path: /
