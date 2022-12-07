@@ -13,14 +13,13 @@ provider:
   runtime: nodejs16.x
   stage: ${opt:stage, 'dev'}
   iamRoleStatements:
-    - Effect: 'Allow'
-      Action:
-      - dynamodb:Query    
-      - dynamodb:BatchGetItem
-      - dynamodb:GeItem
-      - dynamodb:PutItem
-      Resource: 'arn:aws:dynamodb:us-east-1:666676864377:table/Tarifas'
-
+      - Effect: 'Allow'
+        Action:
+        - dynamodb:Query
+        - dynamodb:BatchGetItem
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        Resource: 'arn:aws:dynamodb:us-east-1:666676864377:table/Tarifas'
 
 
 
