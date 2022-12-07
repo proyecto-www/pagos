@@ -1,20 +1,19 @@
 'use strict';
+import DynamoCliente from '../infrastructure/database/DynamoCliente';
 import { APIGatewayProxyEventV2 } from 'aws-lambda'
 import { APIGatewayProxyResult } from 'aws-lambda';
-import Controller from '../infrastructure/controller/Controlller';
-import ObtenerValorController from '../infrastructure/controller/ObtenerValorController';
-import ResponseCustom from '../infrastructure/controller/response/ResponseCustom';
+import Controller from './controller/Controlller';
+import ObtenerValorController from './controller/ObtenerValorController';
 
 export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResult> => {
 
-    let controller:Controller
+    let controller
     let response: APIGatewayProxyResult
-
-    if(event.requestContext.http.method=='GET'){
+    if (event.requestContext.http.method == 'GET') {
         controller = new ObtenerValorController(event)
         response = await controller.exec()
     }
-    else{
+    else {
         controller = new Controller(event)
         response = await controller.exec()
     }
