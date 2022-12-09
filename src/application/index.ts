@@ -6,6 +6,7 @@ import Controller from './controller/Controlller';
 import ObtenerValorController from './controller/ObtenerValorController';
 
 export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResult> => {
+    console.log(event)
 
     let controller
     let response: APIGatewayProxyResult
