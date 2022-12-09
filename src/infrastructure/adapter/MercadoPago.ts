@@ -10,8 +10,8 @@ export default class MercadoPagoCliente {
         const body = {
             "items": [
                 {
-                    "title": "Tiempo de parqueo",
-                    "description": "Costo por cantidad de horas parqueado",
+                    "title": "Parqueadero "+placa,
+                    "description": "Costo por cantidad de horas parqueado para "+placa,
                     "picture_url": "https://parking-psi-livid.vercel.app/static/media/logo.89f336afa5f504150692.png",
                     "quantity": 1,
                     "unit_price": precio
