@@ -19,5 +19,15 @@ export default class GestionVehiculosAdapter {
 
         return vehiculo
     }
+    public async registrarPago(placa:string, idPago:string, valorPagado:string){
+        const body ={
+            placa:placa,
+            idPago:idPago,
+            valorPagado:valorPagado
+         }
+        const gestionVehiculosResponse = await axios.post(this.url + '/registrar/pago',body)
+ 
+
+    }
 
 }
