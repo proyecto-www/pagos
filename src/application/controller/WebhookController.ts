@@ -3,9 +3,10 @@ import { APIGatewayProxyEventV2 } from "aws-lambda";
 import Controller from "./Controlller";
 import ResponseCustom from "./response/ResponseCustom";
 import CalcularTarifa from "../../domain/usecase/CalcularTarifa";
+import RegistrarPagoUseCase from "../../domain/usecase/RegistrarPagoUseCase";
 
 
-export default class ObtenerValorController {
+export default class WebhookController {
 
     private event: APIGatewayProxyEventV2
 
@@ -16,19 +17,17 @@ export default class ObtenerValorController {
 
     public async exec(): Promise<ResponseCustom> {
 
-        const placa: string = this.event.pathParameters!.placa as string
-
-        const calcularTarifaUseCase: CalcularTarifa = new CalcularTarifa()
+        const idPago = this.event.queryStringParameters!.id as string
+        const resgistrarPago = new RegistrarPagoUseCase()
         let respuesta
         try {
-            respuesta= await calcularTarifaUseCase.calcular(placa)
+            respuesta = await resgistrarPago.registrar(idPago)
             console.log(respuesta)
         } catch (error) {
-            console.log(error)
-            return new ResponseCustom(400,error)
+            return new ResponseCustom(400, error)
         }
 
-        return new ResponseCustom(200, {respuesta})
+        return new ResponseCustom(200, { respuesta })
     }
 
 

@@ -10,9 +10,7 @@ private event: APIGatewayProxyEventV2
         this.event = event
     }
 
-    public async exec(): Promise<ResponseCustom>{
-
-        
+    public async exec(): Promise<ResponseCustom>{        
         return ResponseCustom.badRequestJson()
     }
 
