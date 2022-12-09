@@ -4,6 +4,7 @@ import { APIGatewayProxyEventV2 } from 'aws-lambda'
 import { APIGatewayProxyResult } from 'aws-lambda';
 import Controller from './controller/Controlller';
 import ObtenerValorController from './controller/ObtenerValorController';
+import WebhookController from './controller/WebhookController';
 
 export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyResult> => {
 
@@ -11,6 +12,10 @@ export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGateway
     let response: APIGatewayProxyResult
     if (event.requestContext.http.method == 'GET') {
         controller = new ObtenerValorController(event)
+        response = await controller.exec()
+    }
+    else if (event.requestContext.http.method == 'POST') {
+        controller = new WebhookController(event)
         response = await controller.exec()
     }
     else {

@@ -1,24 +1,29 @@
 import DynamoCliente from "../../infrastructure/database/DynamoCliente"
 import GestionVehiculosAdapter from "../../infrastructure/adapter/GestionVehiculosAdapter"
 import Vehiculo from "../model/Vehiculo"
+import MercadoPagoCliente from "../../infrastructure/adapter/MercadoPago"
+import { IoTThingsGraph } from "aws-sdk"
 
 export default class CalcularTarifa {
 
     private dynamo: DynamoCliente
     private gestionVehiculos: GestionVehiculosAdapter
+    private mercadoPago:MercadoPagoCliente
 
 
     constructor() {
 
         this.gestionVehiculos = new GestionVehiculosAdapter()
         this.dynamo = new DynamoCliente()
+        this.mercadoPago = new MercadoPagoCliente()
     }
 
-    public async calcular(placa:string):Promise<number>{
+    public async calcular(placa:string):Promise<{valorAPagar:number,urlPago:string}>{
 
         const vehiculo:Vehiculo= await this.gestionVehiculos.conultarVehiculo(placa)
 
         const tarifaVehiculo = await this.dynamo.obtenerTarifa(vehiculo.tipodevehiculo)
+
 
         const tarifa:number = tarifaVehiculo.valorPorHora
         
@@ -28,7 +33,10 @@ export default class CalcularTarifa {
 
         const valorAPagar:number = horasUso*tarifa
 
-        return valorAPagar
+        const urlPago = await this.mercadoPago.crearPreferencia(valorAPagar,placa)
+
+
+        return {valorAPagar:valorAPagar,urlPago:urlPago}
 
 
     }
